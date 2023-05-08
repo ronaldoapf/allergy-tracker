@@ -73,7 +73,7 @@ export function Login() {
               </Grid>
 
               <Grid item xs={12}>
-                <Link to="#" style={{ textDecoration: 'none' }}>
+                <Link to="/register" style={{ textDecoration: 'none' }}>
                   <Typography color="black" fontWeight={600} textAlign="center" variant="subtitle2">
                     Ainda não tem uma conta?
                   </Typography>
