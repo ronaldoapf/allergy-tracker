@@ -10,6 +10,7 @@ export const AppTheme = createTheme({
     },
   },
   typography: {
+    fontFamily: 'Inter',
     fontSize: 14,
   },
   components: {
