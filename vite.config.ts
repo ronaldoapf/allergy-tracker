@@ -16,8 +16,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@pages': resolve(__dirname, 'src', 'pages'),
+      '@hooks': resolve(__dirname, 'src', 'hooks'),
       '@assets': resolve(__dirname, 'src', 'assets'),
       '@common': resolve(__dirname, 'src', 'common'),
+      '@contexts': resolve(__dirname, 'src', 'contexts'),
       '@components': resolve(__dirname, 'src', 'components'),
     },
   },

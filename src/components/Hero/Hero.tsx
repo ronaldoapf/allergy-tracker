@@ -1,12 +1,12 @@
 import Figure from '@assets/illustration.png'
-import { Box, Button, Container, Hidden, Typography } from '@mui/material'
+import { Button, Hidden, Typography } from '@mui/material'
 import { Link } from 'react-router-dom'
 
 import { HeroBox, HeroContainer } from './style'
 
 export function Hero() {
   return (
-    <HeroContainer maxWidth="lg">
+    <HeroContainer>
       <HeroBox>
         <Typography className="application-title" variant="h2" fontWeight={900}>
           Sua vida sem preocupação

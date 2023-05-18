@@ -1,88 +1,67 @@
-import {
-  Button,
-  Card,
-  Grid,
-  TextField,
-  Container,
-  Typography,
-  CardContent,
-  Divider,
-} from '@mui/material'
-import { Link } from 'react-router-dom'
+import { AuthApi, LoginType } from '@common/resources/api/auth/api'
+import { Loading } from '@components/Loading'
+import { useAuth } from '@hooks/useAuth'
+import { useSnackbar } from '@hooks/useSnackbar'
+import { Card, Container, Typography, CardContent } from '@mui/material'
+import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
+import { LoginForm } from './Form/LoginForm/LoginForm'
 import { LoginContainer, LoginHeaderContainer } from './style'
 
 export function Login() {
+  const { signIn } = useAuth()
+  const navigate = useNavigate()
+  const { addSnackbar } = useSnackbar()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const toggleIsLoading = () => {
+    setIsLoading((prevState) => !prevState)
+  }
+
+  const handleSubmit = useCallback(async (values: LoginType) => {
+    const { email, password } = values
+    toggleIsLoading()
+    await signIn({ email, password, addSnackbar, toggleIsLoading, navigate })
+  }, [])
+
   return (
-    <LoginContainer>
-      <Container maxWidth="sm">
-        <Card>
-          <CardContent>
-            <LoginHeaderContainer>
-              <Typography
-                variant="h4"
-                component="h2"
-                fontWeight={500}
-                textAlign="center"
-                sx={{ color: '#673ab7' }}
-              >
-                Olá, bem vindo!
-              </Typography>
+    <>
+      <Loading open={isLoading} title="Enviando informações ao servidor..." />
+      <LoginContainer>
+        <Container maxWidth="sm">
+          <Card>
+            <CardContent>
+              <LoginHeaderContainer>
+                <Typography
+                  variant="h4"
+                  component="h2"
+                  fontWeight={500}
+                  textAlign="center"
+                  sx={{ color: '#673ab7' }}
+                >
+                  Olá, bem vindo!
+                </Typography>
 
-              <Typography
-                gutterBottom
-                fontWeight={500}
-                component="span"
-                variant="caption"
-                textAlign="center"
-              >
-                Entre com suas credenciais para continuar
-              </Typography>
-            </LoginHeaderContainer>
+                <Typography
+                  gutterBottom
+                  fontWeight={500}
+                  component="span"
+                  variant="caption"
+                  textAlign="center"
+                >
+                  Entre com suas credenciais para continuar
+                </Typography>
+              </LoginHeaderContainer>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField fullWidth size="medium" name="email" type="email" label="E-mail" />
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField fullWidth size="medium" name="password" type="password" label="Senha" />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Link to="#" style={{ textDecoration: 'none' }}>
-                  <Typography
-                    color="primary"
-                    fontWeight={500}
-                    textAlign="right"
-                    variant="subtitle2"
-                  >
-                    Esqueceu sua senha?
-                  </Typography>
-                </Link>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button variant="contained" fullWidth>
-                  Entrar
-                </Button>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Divider />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Link to="/register" style={{ textDecoration: 'none' }}>
-                  <Typography color="black" fontWeight={600} textAlign="center" variant="subtitle2">
-                    Ainda não tem uma conta?
-                  </Typography>
-                </Link>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
-      </Container>
-    </LoginContainer>
+              <LoginForm
+                onSubmit={handleSubmit}
+                initialValues={{ email: 'marcelo@gmail.com', password: 'testeeeeeeA@2' }}
+              />
+            </CardContent>
+          </Card>
+        </Container>
+      </LoginContainer>
+    </>
   )
 }
